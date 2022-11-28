@@ -16,7 +16,7 @@ $(".btn").click(function(){
     userClickedPattern.push(useChosenColour);
     playSound(useChosenColour);
     animatedPressed(useChosenColour);
-    checkAnswer(level-1);
+    checkAnswer(userClickedPattern.length-1);
 });
 
 function nextSquence() {
@@ -28,7 +28,6 @@ function nextSquence() {
     $("#"+randomChosenColour).fadeIn(100).fadeOut(100).fadeIn(100);
     playSound(randomChosenColour);
     userClickedPattern = [];
-        
 };
 
 function playSound(name) {
@@ -47,15 +46,16 @@ function animatedPressed(currentColour) {
 };
 
 function checkAnswer(currentLevel) {
-    if (gamePattern[currentLevel] == userClickedPattern[currentLevel] ) {
-        setTimeout(() => {
-            nextSquence();
-        }, 1000);
+    if (gamePattern[currentLevel] === userClickedPattern[currentLevel] ) {
+        if (gamePattern.length === userClickedPattern.length) {
+            setTimeout(() => {
+                nextSquence();
+            }, 1000);
+        }
         
     }
-    else {
-        let audio = new Audio("sounds/wrong.mp3")
-        audio.play();
+    else{
+        playSound("wrong")
         let self = $("body");
         self.addClass("game-over");
         setTimeout(() => {
@@ -70,5 +70,4 @@ function startOver() {
     level = 0 
     gamePattern = []
     started = false
-
 }
